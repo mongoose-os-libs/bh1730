@@ -1,0 +1,23 @@
+author: Angus Gratton
+description: BH1730 sensor support
+version: 0.1
+
+libs_version: ${mos_version}
+modules_version: ${mos_version}
+mongoose_os_version: ${mos_version}
+
+platform: esp32
+
+libs:
+  - origin: https://github.com/mongoose-os-libs/i2c
+
+sources:
+  - src
+includes:
+  - include
+
+config_schema:
+  - ["i2c.enable", true]
+
+# Used by the mos tool to catch mos binaries incompatible with this file format
+skeleton_version: 2017-05-18
