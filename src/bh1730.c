@@ -170,8 +170,11 @@ err:
 }
 
 
-void bh1730_free(bh1730_t *d)
-{
-    free(d);
+void bh1730_free(bh1730_t *d) {
+  free(d);
+}
+
+bool mgos_bh1730_init(void) {
+  return true;
 }
 
