@@ -18,9 +18,15 @@
 
 typedef struct bh1730_t bh1730_t;
 
+/*
+ * Create and return a BH1730 instance; `addr` is an I2C address of the BH1730
+ * sensor.
+ */
 bh1730_t *bh1730_init(int addr);
 
-/* internal calculations are all floats but mongoose FFI expects double */
-double bh1730_read_lux(bh1730_t *d);
+/*
+ * Return the ambient light level in lux, or -1 in case of a failure.
+ */
+float bh1730_read_lux(bh1730_t *d);
 
 void bh1730_free(bh1730_t *d);

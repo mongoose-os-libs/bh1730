@@ -16,18 +16,23 @@ let BH1730 = {
 
 	_create: ffi('void *bh1730_init(int)'),
 	_close: ffi('void bh1730_free(void *)'),
-	_read_lux: ffi('double bh1730_read_lux(void *)'),
+	_read_lux: ffi('float bh1730_read_lux(void *)'),
+
+  // ## **`BH1730.create(addr)`**
+  // Create a BH1730 instance: an object with the methods described below.
+  // `addr` is an i2c address of the BH1730 sensor.
+  create: function(addr) {
+    let obj = Object.create(BH1730._proto);
+    obj.bh1730 = BH1730._create(addr);
+    return obj.bh1730 ? obj : null;
+  },
 
 	_proto : {
+    // ## **`myBH.read_lux()`**
+    // Return the ambient light level in lux, or -1 in case of a failure.
 		read_lux: function() {
 			return BH1730._read_lux(this.bh1730);
 		}
-	},
-
-	create: function(addr) {
-		let obj = Object.create(BH1730._proto);
-		obj.bh1730 = BH1730._create(addr);
-		return obj.bh1730 ? obj : null;
 	},
 };
 

@@ -84,7 +84,7 @@ static bool read_reg(bh1730_t *d, int reg, int *retval)
 
 #define T_INT_US 2.8 //uS, typical, from datasheet
 
-double bh1730_read_lux(bh1730_t *d)
+float bh1730_read_lux(bh1730_t *d)
 {
     int r = send_cmd(d, BH1730_CMD_MAGIC | BH1730_CMD_SETADDR | BH1730_ADDR_CONTROL, BH1730_CTL_POWER | BH1730_CTL_ADC_EN | BH1730_CTL_ONE_TIME);
     if (!r) {
