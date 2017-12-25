@@ -29,4 +29,7 @@ bh1730_t *bh1730_init(int addr);
  */
 float bh1730_read_lux(bh1730_t *d);
 
+/*
+ * Free memory occupied by the BH1730 instance.
+ */
 void bh1730_free(bh1730_t *d);
