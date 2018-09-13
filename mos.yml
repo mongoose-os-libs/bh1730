@@ -8,6 +8,9 @@ mongoose_os_version: ${mos_version}
 
 platform: esp32
 
+tags:
+  - docs:drivers:BH1730 sensor
+
 libs:
   - origin: https://github.com/mongoose-os-libs/i2c
 
