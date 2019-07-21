@@ -23,4 +23,4 @@ config_schema:
   - ["i2c.enable", true]
 
 # Used by the mos tool to catch mos binaries incompatible with this file format
-skeleton_version: 2017-05-18
+manifest_version: 2017-05-18
