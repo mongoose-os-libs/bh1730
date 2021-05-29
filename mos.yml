@@ -12,7 +12,7 @@ tags:
   - docs:drivers:BH1730 sensor
 
 libs:
-  - origin: https://github.com/mongoose-os-libs/i2c
+  - location: https://github.com/mongoose-os-libs/i2c
 
 sources:
   - src
