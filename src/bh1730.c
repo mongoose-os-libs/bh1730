@@ -11,16 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#include <stdio.h>
-#include "esp_log.h"
-#include "esp_err.h"
+
 #include "bh1730.h"
 
+#include "mgos.h"
 #include "mgos_i2c.h"
 
 /* Mongoose OS C driver (mJS bindable) for Rohm BH1730 light sensor */
-
-static const char *TAG = "BH1730";
 
 struct bh1730_t {
     int addr;
@@ -98,7 +95,7 @@ float bh1730_read_lux(bh1730_t *d)
         if (!r) {
             goto err;
         }
-        vTaskDelay(20 / portTICK_RATE_MS);
+        mgos_msleep(20);
         if ((tmo--) == 0) {
             goto err;
         }
@@ -128,10 +125,10 @@ float bh1730_read_lux(bh1730_t *d)
             lux = (0.276 * data0 - 0.130 * data1) / d->gain * 102.6 / itime_ms;
         }
     }
-    ESP_LOGD(TAG, "Lux reading (C-side) %.2f", lux);
+    LOG(LL_DEBUG, ("Lux reading (C-side) %.2f", lux));
     return lux;
 err:
-    ESP_LOGE(TAG, "I2C communications error");
+    LOG(LL_ERROR, ("I2C communications error"));
     return -1;
 }
 
@@ -146,22 +143,22 @@ bh1730_t *bh1730_init(int addr)
     int id;
     int r = read_reg(ret, BH1730_ADDR_ID, &id);
     if (!r) {
-        ESP_LOGE(TAG, "Read ID reg error for addr 0x%X", addr);
+        LOG(LL_ERROR, ("Read ID reg error for addr 0x%X", addr));
         goto err;
     }
     if ((id & 0xF0) != 0x70) {
-        ESP_LOGE(TAG, "Read ID: didn't receive 0x7x but 0x%X", id);
+        LOG(LL_ERROR, ("Read ID: didn't receive 0x7x but 0x%X", id));
         goto err;
     }
 
     //Reset chip
     r = send_cmd(ret, BH1730_CMD_MAGIC | BH1730_CMD_SPECCMD | BH1730_SPECCMD_RESET, -1);
     if (!r) {
-        ESP_LOGE(TAG, "Chip reset reg error for addr 0x%X", addr);
+        LOG(LL_ERROR, ("Chip reset reg error for addr 0x%X", addr));
         goto err;
     }
 
-    ESP_LOGI(TAG, "Device at 0x%X initialized, ID=%X.", addr, id);
+    LOG(LL_INFO, ("Device at 0x%X initialized, ID=%X.", addr, id));
 
     return ret;
 err:

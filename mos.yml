@@ -6,8 +6,6 @@ libs_version: ${mos_version}
 modules_version: ${mos_version}
 mongoose_os_version: ${mos_version}
 
-platform: esp32
-
 tags:
   - docs:drivers:BH1730 sensor
 
